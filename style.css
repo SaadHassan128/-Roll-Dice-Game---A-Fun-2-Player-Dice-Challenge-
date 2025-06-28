@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 
 * {
   margin: 0;
@@ -12,21 +12,24 @@ html {
 }
 
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-weight: 400;
-  height: 100vh;
+  min-height: 100vh;
   color: #333;
   background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
 }
 
 /* LAYOUT */
 main {
   position: relative;
-  width: 100rem;
-  height: 60rem;
+  width: 100%;
+  max-width: 100rem;
+  height: auto;
+  min-height: 60rem;
   background-color: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(200px);
   filter: blur();
@@ -34,30 +37,33 @@ main {
   border-radius: 9px;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
 }
 
 .player {
-  flex: 50%;
-  padding: 9rem;
+  flex: 1;
+  padding: 4rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: all 0.75s;
+  min-height: 30rem;
 }
 
 /* ELEMENTS */
 .name {
   position: relative;
-  font-size: 4rem;
+  font-size: clamp(2.4rem, 4vw, 4rem);
   text-transform: uppercase;
   letter-spacing: 1px;
   word-spacing: 2px;
   font-weight: 300;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .score {
-  font-size: 8rem;
+  font-size: clamp(4rem, 8vw, 8rem);
   font-weight: 300;
   color: #c7365f;
   margin-bottom: auto;
@@ -82,65 +88,64 @@ main {
   opacity: 0.8;
   border-radius: 9px;
   color: #fff;
-  width: 65%;
+  width: 100%;
+  max-width: 20rem;
   padding: 2rem;
   text-align: center;
   transition: all 0.75s;
+  margin-top: 2rem;
 }
 
 .current-label {
   text-transform: uppercase;
   margin-bottom: 1rem;
-  font-size: 1.7rem;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
   color: #ddd;
 }
 
 .current-score {
-  font-size: 3.5rem;
+  font-size: clamp(2.4rem, 4vw, 3.5rem);
 }
 
-/* ABSOLUTE POSITIONED ELEMENTS */
+/* CONTROLS SECTION */
+.controls {
+  position: relative;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* BUTTONS */
 .btn {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   color: #444;
   background: none;
   border: none;
   font-family: inherit;
-  font-size: 1.8rem;
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
   text-transform: uppercase;
   cursor: pointer;
   font-weight: 400;
   transition: all 0.2s;
-
-  background-color: white;
   background-color: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(10px);
-
-  padding: 0.7rem 2.5rem;
+  padding: 1rem 2rem;
   border-radius: 50rem;
   box-shadow: 0 1.75rem 3.5rem rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 20rem;
 }
 
 .btn::first-letter {
-  font-size: 2.4rem;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
   display: inline-block;
   margin-right: 0.7rem;
 }
 
-.btn--new {
-  top: 4rem;
-}
-.btn--roll {
-  top: 39.3rem;
-}
-.btn--hold {
-  top: 46.1rem;
-}
-
 .btn:active {
-  transform: translate(-50%, 3px);
+  transform: translateY(3px);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
 }
 
@@ -148,13 +153,19 @@ main {
   outline: none;
 }
 
+.btn:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* DICE */
 .dice {
-  position: absolute;
-  left: 50%;
-  top: 16.5rem;
-  transform: translateX(-50%);
-  height: 10rem;
+  display: block;
+  margin: 2rem auto;
+  height: clamp(6rem, 12vw, 10rem);
+  max-width: 90vw;
+  width: auto;
   box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
+  background: none;
 }
 
 .player--winner {
@@ -166,8 +177,177 @@ main {
   color: #c7365f;
 }
 
-
 .hidden {
   display: none;
 }
 
+/* RESPONSIVE DESIGN */
+@media (min-width: 768px) {
+  main {
+    flex-direction: row;
+    height: 60rem;
+  }
+
+  .player {
+    padding: 9rem 4rem;
+    min-height: auto;
+  }
+
+  .controls {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0;
+    background: none;
+    gap: 0;
+  }
+
+  .btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: none;
+  }
+
+  .btn--new {
+    top: 4rem;
+  }
+
+  .btn--roll {
+    top: 39.3rem;
+  }
+
+  .btn--hold {
+    top: 46.1rem;
+  }
+
+  .btn:active {
+    transform: translate(-50%, 3px);
+  }
+
+  .dice {
+    position: absolute;
+    left: 50%;
+    top: 16.5rem;
+    transform: translateX(-50%);
+    margin: 0;
+    max-width: none;
+  }
+
+  .current {
+    width: 65%;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 1rem;
+  }
+
+  main {
+    border-radius: 6px;
+  }
+
+  .player {
+    padding: 2rem 1rem;
+    min-height: 25rem;
+  }
+
+  .current {
+    padding: 1.5rem;
+    max-width: 15rem;
+  }
+
+  .controls {
+    padding: 2rem 1rem;
+  }
+
+  .btn {
+    padding: 0.8rem 1.5rem;
+    max-width: 18rem;
+  }
+}
+
+@media (max-width: 320px) {
+  html {
+    font-size: 50%;
+  }
+
+  .player {
+    padding: 1.5rem 0.5rem;
+    min-height: 20rem;
+  }
+
+  .current {
+    padding: 1rem;
+    max-width: 12rem;
+  }
+
+  .controls {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1rem;
+    max-width: 15rem;
+  }
+}
+
+/* Landscape orientation for mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  body {
+    padding: 0.5rem;
+  }
+
+  main {
+    min-height: 40rem;
+  }
+
+  .player {
+    padding: 1rem;
+    min-height: 20rem;
+  }
+
+  .controls {
+    padding: 1rem;
+  }
+
+  .dice {
+    height: 4rem;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .dice {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-image: linear-gradient(to top left, #2d1b3d 0%, #4a1a1f 100%);
+  }
+
+  main {
+    background-color: rgba(0, 0, 0, 0.35);
+  }
+
+  .btn {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #222;
+  }
+}
